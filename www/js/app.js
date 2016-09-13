@@ -29,6 +29,14 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers'])
     });
     $ionicSideMenuDelegate.toggleRight();
   }
+
+  $rootScope.side_menu = document.getElementsByTagName("ion-side-menu")[0];
+
+  $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromParams, toParams) {
+     if (toState.name != 'native') {
+         $rootScope.side_menu.style.visibility = "visible";
+     }
+  });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
