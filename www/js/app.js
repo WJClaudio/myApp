@@ -22,13 +22,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers'])
     }
   });
 
-  $rootScope.closeMenu = function() {
-    console.log("Closing Menu");
-    $ionicHistory.nextViewOptions({
-        disableAnimate: true
-    });
-    $ionicSideMenuDelegate.toggleRight();
-  }
+  $rootScope.isMenuOpen = false;
 
   $rootScope.side_menu = document.getElementsByTagName("ion-side-menu")[0];
 
@@ -37,6 +31,36 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers'])
          $rootScope.side_menu.style.visibility = "visible";
      }
   });
+
+  if ($rootScope.isMenuOpen == true) {
+    $rootScope.side_menu.style.opacity = 0;
+  } else if ($rootScope.isMenuOpen == false) {
+    $rootScope.side_menu.style.opacity = 1;
+  }
+
+  $rootScope.closeMenu = function() {
+    console.log("Closing Menu");
+    $ionicHistory.nextViewOptions({
+        disableAnimate: true
+    });
+    $ionicSideMenuDelegate.toggleRight();
+    $rootScope.isMenuOpen = false;
+    $rootScope.side_menu.style.opacity = 0;
+  }
+
+  $rootScope.toggleMenu = function() {
+    console.log("Toggling Menu");
+    $ionicSideMenuDelegate.toggleRight();
+    if ($rootScope.isMenuOpen == true) {
+      console.log("closed");
+      $rootScope.isMenuOpen = false;
+      $rootScope.side_menu.style.opacity = 0;
+    } else if($rootScope.isMenuOpen == false)  {
+      console.log("open");
+      $rootScope.isMenuOpen = true;
+      $rootScope.side_menu.style.opacity = 1;
+    }
+  }
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -48,5 +72,5 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers'])
   })
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/test');
+  $urlRouterProvider.otherwise('/nonNative');
 });
