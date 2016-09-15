@@ -43,7 +43,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers'])
     $ionicHistory.nextViewOptions({
         disableAnimate: true
     });
-    $ionicSideMenuDelegate.toggleRight();
+    $ionicSideMenuDelegate.toggleRight(false);
     $rootScope.isMenuOpen = false;
     $rootScope.side_menu.style.opacity = 0;
   }
